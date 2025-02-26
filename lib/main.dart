@@ -25,16 +25,37 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: _isDarkMode ? ThemeData.dark() : ThemeData.light(),
-      home: FadingTextAnimation(onThemeToggle: toggleTheme, isDarkMode: _isDarkMode),
+      home: PageView(
+        children: [
+          FadingTextAnimation(
+            onThemeToggle: toggleTheme,
+            isDarkMode: _isDarkMode,
+            animationType: AnimationType.fade,
+          ),
+          FadingTextAnimation(
+            onThemeToggle: toggleTheme,
+            isDarkMode: _isDarkMode,
+            animationType: AnimationType.scale,
+          ),
+        ],
+      ),
     );
   }
 }
 
+enum AnimationType { fade, scale }
+
 class FadingTextAnimation extends StatefulWidget {
   final Function(bool) onThemeToggle;
   final bool isDarkMode;
+  final AnimationType animationType;
 
-  const FadingTextAnimation({Key? key, required this.onThemeToggle, required this.isDarkMode}) : super(key: key);
+  const FadingTextAnimation({
+    Key? key,
+    required this.onThemeToggle,
+    required this.isDarkMode,
+    required this.animationType,
+  }) : super(key: key);
 
   @override
   _FadingTextAnimationState createState() => _FadingTextAnimationState();
@@ -43,6 +64,7 @@ class FadingTextAnimation extends StatefulWidget {
 class _FadingTextAnimationState extends State<FadingTextAnimation> {
   bool _isVisible = true;
   Color _textColor = Colors.black;
+  bool _isScaleAnimation = false;
 
   void toggleVisibility() {
     setState(() {
@@ -56,6 +78,17 @@ class _FadingTextAnimationState extends State<FadingTextAnimation> {
     });
   }
 
+  void toggleTextAnimation() {
+    setState(() {
+      if (widget.animationType == AnimationType.fade) {
+        _isVisible = !_isVisible;
+      } else {
+        _isScaleAnimation = !_isScaleAnimation;
+      }
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,22 +101,31 @@ class _FadingTextAnimationState extends State<FadingTextAnimation> {
           ),
         ],
       ),
-      body: Center(
-        child: AnimatedOpacity(
-          opacity: _isVisible ? 1.0 : 0.0,
-          duration: Duration(seconds: 1),
-          child: Text(
-            'Hello, Flutter!',
-            style: TextStyle(fontSize: 24, color: _textColor),
-          ),
-        ),
+        body: Center(
+        child: widget.animationType == AnimationType.scale
+            ? AnimatedScale(
+                scale: _isScaleAnimation ? 1.5 : 1.0,
+                duration: Duration(seconds: 1),
+                child: Text(
+                  'Hello, Flutter!',
+                  style: TextStyle(fontSize: 24, color: _textColor),
+                ),
+              )
+            : AnimatedOpacity(
+                opacity: _isVisible ? 1.0 : 0.0,
+                duration: Duration(seconds: 1),
+                child: Text(
+                  'Hello, Flutter!',
+                  style: TextStyle(fontSize: 24, color: _textColor),
+                ),
+              ),
       ),
       floatingActionButton: Stack(
         children: [
           Align(
             alignment: Alignment.bottomRight,
             child: FloatingActionButton(
-              onPressed: toggleVisibility,
+              onPressed: toggleTextAnimation,
               child: Icon(Icons.play_arrow),
             ),
           ),
