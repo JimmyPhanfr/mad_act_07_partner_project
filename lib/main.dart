@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 
 void main() {
@@ -7,6 +8,8 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -34,7 +37,7 @@ class FadingTextAnimation extends StatefulWidget {
   final Function(bool) onThemeToggle;
   final bool isDarkMode;
 
-  const FadingTextAnimation({Key? key, required this.onThemeToggle, required this.isDarkMode}) : super(key: key);
+  const FadingTextAnimation({super.key, required this.onThemeToggle, required this.isDarkMode});
 
   @override
   _FadingTextAnimationState createState() => _FadingTextAnimationState();
@@ -69,13 +72,18 @@ class _FadingTextAnimationState extends State<FadingTextAnimation> {
         ],
       ),
       body: Center(
-        child: AnimatedOpacity(
-          opacity: _isVisible ? 1.0 : 0.0,
-          duration: Duration(seconds: 1),
-          child: Text(
-            'Hello, Flutter!',
-            style: TextStyle(fontSize: 24, color: _textColor),
-          ),
+        child: Column(
+          children: [
+            AnimatedOpacity(
+              opacity: _isVisible ? 1.0 : 0.0,
+              duration: Duration(seconds: 1),
+              child: Text(
+                'Hello, Flutter!',
+                style: TextStyle(fontSize: 24, color: _textColor),
+              ),
+            ),
+
+          ],
         ),
       ),
       floatingActionButton: Stack(
