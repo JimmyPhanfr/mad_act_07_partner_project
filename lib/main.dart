@@ -7,7 +7,10 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _MyAppState createState() => _MyAppState();
 }
 
@@ -51,13 +54,14 @@ class FadingTextAnimation extends StatefulWidget {
   final AnimationType animationType;
 
   const FadingTextAnimation({
-    Key? key,
+    super.key,
     required this.onThemeToggle,
     required this.isDarkMode,
     required this.animationType,
-  }) : super(key: key);
+  });
 
   @override
+  // ignore: library_private_types_in_public_api
   _FadingTextAnimationState createState() => _FadingTextAnimationState();
 }
 
@@ -65,6 +69,7 @@ class _FadingTextAnimationState extends State<FadingTextAnimation> {
   bool _isVisible = true;
   Color _textColor = Colors.black;
   bool _isScaleAnimation = false;
+  double borderRadiusValue = 50.0;
 
   void toggleVisibility() {
     setState(() {
@@ -114,10 +119,26 @@ class _FadingTextAnimationState extends State<FadingTextAnimation> {
                       style: TextStyle(fontSize: 24, color: _textColor),
                     ),
                     SizedBox(height: 20),
-                    Image.asset(
-                      'assets/images/pikachu.png',
-                      width: 100,
-                      height: 100,
+                    Container(
+                      padding: EdgeInsets.all(8),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(borderRadiusValue),
+                        child: Image.asset(
+                          'assets/images/pikachu.png',
+                          width: 100,
+                          height: 100,
+                        ),
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          if (borderRadiusValue == 50) {
+                            borderRadiusValue = 0;
+                          } else { borderRadiusValue = 50; }
+                        });
+                      },
+                      child: const Text('Border Radius Button')
                     ),
                   ],
                 ),
@@ -133,10 +154,26 @@ class _FadingTextAnimationState extends State<FadingTextAnimation> {
                       style: TextStyle(fontSize: 24, color: _textColor),
                     ),
                     SizedBox(height: 20),
-                    Image.asset(
-                      'assets/images/pikachu.png',
-                      width: 100,
-                      height: 100,
+                    Container(
+                      padding: EdgeInsets.all(8),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(borderRadiusValue),
+                        child: Image.asset(
+                          'assets/images/pikachu.png',
+                          width: 100,
+                          height: 100,
+                        ),
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          if (borderRadiusValue == 50) {
+                            borderRadiusValue = 0;
+                          } else { borderRadiusValue = 50; }
+                        });
+                      },
+                      child: const Text('Border Radius Button')
                     ),
                   ],
                 ),
