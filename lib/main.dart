@@ -106,17 +106,39 @@ class _FadingTextAnimationState extends State<FadingTextAnimation> {
             ? AnimatedScale(
                 scale: _isScaleAnimation ? 1.5 : 1.0,
                 duration: Duration(seconds: 1),
-                child: Text(
-                  'Hello, Flutter!',
-                  style: TextStyle(fontSize: 24, color: _textColor),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Hello, Flutter!',
+                      style: TextStyle(fontSize: 24, color: _textColor),
+                    ),
+                    SizedBox(height: 20),
+                    Image.asset(
+                      'assets/images/pikachu.png',
+                      width: 100,
+                      height: 100,
+                    ),
+                  ],
                 ),
               )
             : AnimatedOpacity(
                 opacity: _isVisible ? 1.0 : 0.0,
                 duration: Duration(seconds: 1),
-                child: Text(
-                  'Hello, Flutter!',
-                  style: TextStyle(fontSize: 24, color: _textColor),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Hello, Flutter!',
+                      style: TextStyle(fontSize: 24, color: _textColor),
+                    ),
+                    SizedBox(height: 20),
+                    Image.asset(
+                      'assets/images/pikachu.png',
+                      width: 100,
+                      height: 100,
+                    ),
+                  ],
                 ),
               ),
       ),
